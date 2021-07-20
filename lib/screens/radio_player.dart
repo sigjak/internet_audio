@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:just_audio_background/just_audio_background.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import '../commons/player_buttons.dart';
@@ -33,18 +34,20 @@ class _PlayerState extends State<Player> {
     if (index == 0) {
       radio = DashAudioSource(
         Uri.parse(data.stations[index].source),
-        tag: AudioMetadata(
+        tag: MediaItem(
+            id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artwork: data.stations[index].logo),
+            artUri: Uri.parse(data.stations[index].logo)),
       );
     } else {
       radio = AudioSource.uri(
         Uri.parse(data.stations[index].source),
-        tag: AudioMetadata(
+        tag: MediaItem(
+            id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artwork: data.stations[index].logo),
+            artUri: Uri.parse(data.stations[index].logo)),
       );
     }
 
@@ -73,25 +76,26 @@ class _PlayerState extends State<Player> {
         child: Column(
           children: [
             StreamBuilder<SequenceState?>(
-                stream: _audioPlayer.sequenceStateStream,
-                builder: (_, snapshot) {
-                  final state = snapshot.data;
+              stream: _audioPlayer.sequenceStateStream,
+              builder: (_, snapshot) {
+                final state = snapshot.data;
 
-                  return state != null
-                      ? Column(children: [
-                          Container(
-                            margin: EdgeInsets.symmetric(vertical: 20),
-                            height: 200,
-                            child: Image(
-                              image: AssetImage(state.sequence[0].tag.artwork),
-                            ),
-                          ),
-                          Text(state.sequence[0].tag.album,
-                              style: TextStyle(fontSize: 20)),
-                          Text(state.sequence[state.currentIndex].tag.title)
-                        ])
-                      : Text('');
-                }),
+                return state != null
+                    ? Column(children: [
+                        Container(
+                          margin: EdgeInsets.symmetric(vertical: 20),
+                          height: 200,
+                          // child: Image(
+                          //   image: AssetImage(state.sequence[0].tag.artwork),
+                          // ),
+                        ),
+                        Text(state.sequence[0].tag.album,
+                            style: TextStyle(fontSize: 20)),
+                        Text(state.sequence[state.currentIndex].tag.title)
+                      ])
+                    : Text('');
+              },
+            ),
             PlayerButtons(_audioPlayer, true),
             // SliderBar(_audioPlayer),
             SizedBox(
