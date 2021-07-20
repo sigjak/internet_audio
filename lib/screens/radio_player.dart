@@ -38,7 +38,7 @@ class _PlayerState extends State<Player> {
             id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artUri: Uri.parse(data.stations[index].logo)),
+            artist: data.stations[index].logo),
       );
     } else {
       radio = AudioSource.uri(
@@ -47,7 +47,7 @@ class _PlayerState extends State<Player> {
             id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artUri: Uri.parse(data.stations[index].logo)),
+            artist: data.stations[index].logo),
       );
     }
 
@@ -85,9 +85,9 @@ class _PlayerState extends State<Player> {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 20),
                           height: 200,
-                          // child: Image(
-                          //   image: AssetImage(state.sequence[0].tag.artwork),
-                          // ),
+                          child: Image(
+                            image: AssetImage(state.sequence[0].tag.artist),
+                          ),
                         ),
                         Text(state.sequence[0].tag.album,
                             style: TextStyle(fontSize: 20)),
