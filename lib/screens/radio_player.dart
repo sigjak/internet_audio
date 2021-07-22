@@ -5,7 +5,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import '../commons/player_buttons.dart';
-import '../models/meta.dart';
+//import '../models/meta.dart';
 import '../helpers/data_provider.dart';
 
 class Player extends StatefulWidget {
@@ -18,7 +18,7 @@ class Player extends StatefulWidget {
 class _PlayerState extends State<Player> {
   late AudioPlayer _audioPlayer;
   int index = 0;
-
+  late DataProvider data;
   @override
   void initState() {
     super.initState();
@@ -27,7 +27,8 @@ class _PlayerState extends State<Player> {
   }
 
   initRadio(index) async {
-    final data = Provider.of<DataProvider>(context, listen: false);
+    data = Provider.of<DataProvider>(context,
+        listen: false); //context.read<DataProvider>();
     final session = await AudioSession.instance;
     final AudioSource radio;
     // final _playList = ConcatenatingAudioSource(children: data.playlist);
@@ -65,7 +66,7 @@ class _PlayerState extends State<Player> {
 
   @override
   Widget build(BuildContext context) {
-    final data = Provider.of<DataProvider>(context);
+    //final data = Provider.of<DataProvider>(context);
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(

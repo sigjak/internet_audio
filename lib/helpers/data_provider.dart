@@ -1,19 +1,19 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:just_audio/just_audio.dart';
-import 'package:flutter/services.dart';
-//import 'package:shared_preferences/shared_preferences.dart';
-import 'dart:convert';
-import '../models/meta.dart';
+// import 'package:just_audio/just_audio.dart';
+// import 'package:flutter/services.dart';
+// //import 'package:shared_preferences/shared_preferences.dart';
+// import 'dart:convert';
+//import '../models/meta.dart';
 import '../models/station.dart';
 
 class DataProvider with ChangeNotifier {
-  late int numberOfBooks;
-  late List<dynamic> namesOfBooks;
-  late List<dynamic> figFile;
-  late List<String> mp3Files;
-  List<AudioSource> playlist = [];
-  List<List<AudioSource>> playLists = [];
+  // late int numberOfBooks;
+  // late List<dynamic> namesOfBooks;
+  // late List<dynamic> figFile;
+  // late List<String> mp3Files;
+  // List<AudioSource> playlist = [];
+  // List<List<AudioSource>> playLists = [];
   List<Station> stations = [
     Station(
         name: 'BBC World Service',
@@ -51,59 +51,45 @@ class DataProvider with ChangeNotifier {
   //List<String> audioFiles = [];
   //List<AudioSource> workList = [];
 
-  Future<void> getAssetFiles() async {
-    final manifestContent = await rootBundle.loadString('AssetManifest.json');
-    final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
-    mp3Files = manifestMap.keys.where((key) => key.contains('.mp3')).toList();
-    // clean empty spaces
-    for (var i = 0; i < mp3Files.length; i++) {
-      mp3Files[i] = mp3Files[i].replaceAll('%20', ' ');
-    }
+  // Future<void> getAssetFiles() async {
+  //   final manifestContent = await rootBundle.loadString('AssetManifest.json');
+  //   final Map<String, dynamic> manifestMap = jsonDecode(manifestContent);
+  //   mp3Files = manifestMap.keys.where((key) => key.contains('.mp3')).toList();
+  //   // clean empty spaces
+  //   for (var i = 0; i < mp3Files.length; i++) {
+  //     mp3Files[i] = mp3Files[i].replaceAll('%20', ' ');
+  //   }
 
-    String infoJson =
-        await rootBundle.loadString('assets/files/infoBooks.json');
-    var infoMap = jsonDecode(infoJson);
-    numberOfBooks = infoMap["numberOfBooks"];
-    namesOfBooks = infoMap['namesOfBooks'];
-    figFile = infoMap['artwork'];
-    prepPlaylist();
-  }
+  //   String infoJson =
+  //       await rootBundle.loadString('assets/files/infoBooks.json');
+  //   var infoMap = jsonDecode(infoJson);
+  //   numberOfBooks = infoMap["numberOfBooks"];
+  //   namesOfBooks = infoMap['namesOfBooks'];
+  //   figFile = infoMap['artwork'];
+  //   prepPlaylist();
+  // }
 
-  prepPlaylist() {
-    for (var i = 0; i < numberOfBooks; i++) {
-      playlist = [];
-      mp3Files.forEach((element) {
-        if (element.contains(namesOfBooks[i])) {
-          String temp = element.substring(0, element.length - 4);
-          temp = temp.substring(18);
-          playlist.add(
-            AudioSource.uri(
-              Uri.parse("asset:///$element"),
-              tag: AudioMetadata(
-                  album: namesOfBooks[i], title: temp, artwork: figFile[i]),
-            ),
-          );
-        }
-      });
+  // prepPlaylist() {
+  //   for (var i = 0; i < numberOfBooks; i++) {
+  //     playlist = [];
+  //     mp3Files.forEach((element) {
+  //       if (element.contains(namesOfBooks[i])) {
+  //         String temp = element.substring(0, element.length - 4);
+  //         temp = temp.substring(18);
+  //         playlist.add(
+  //           AudioSource.uri(
+  //             Uri.parse("asset:///$element"),
+  //             tag: AudioMetadata(
+  //                 album: namesOfBooks[i], title: temp, artwork: figFile[i]),
+  //           ),
+  //         );
+  //       }
+  //     });
 
-      playLists.add(playlist);
-    }
-  }
-
-  Duration parseDuration(String s) {
-    int hours = 0;
-    int minutes = 0;
-    int micros;
-    List<String> parts = s.split(':');
-    if (parts.length > 2) {
-      hours = int.parse(parts[parts.length - 3]);
-    }
-    if (parts.length > 1) {
-      minutes = int.parse(parts[parts.length - 2]);
-    }
-    micros = (double.parse(parts[parts.length - 1]) * 1000000).round();
-    return Duration(hours: hours, minutes: minutes, microseconds: micros);
-  }
+  //     playLists.add(playlist);
+  //   }
+  // }
+//
 
   // checkfRefs(_audioPlayer) async {
   //   SharedPreferences prefs = await SharedPreferences.getInstance();
