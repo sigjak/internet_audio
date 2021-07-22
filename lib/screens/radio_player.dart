@@ -39,7 +39,11 @@ class _PlayerState extends State<Player> {
             id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artist: data.stations[index].logo),
+            // artist: data.stations[index].logo,
+            extras: {
+              'image': data.stations[index].logo,
+              'location': data.stations[index].location
+            }),
       );
     } else {
       radio = AudioSource.uri(
@@ -48,7 +52,11 @@ class _PlayerState extends State<Player> {
             id: index.toString(),
             album: data.stations[index].name,
             title: data.stations[index].name,
-            artist: data.stations[index].logo),
+            extras: {
+              'image': data.stations[index].logo,
+              'location': data.stations[index].location
+            }),
+        //artist: data.stations[index].logo),
       );
     }
 
@@ -87,12 +95,14 @@ class _PlayerState extends State<Player> {
                           margin: EdgeInsets.symmetric(vertical: 20),
                           height: 200,
                           child: Image(
-                            image: AssetImage(state.sequence[0].tag.artist),
+                            image: AssetImage(
+                                state.sequence[0].tag.extras['image']),
                           ),
                         ),
                         Text(state.sequence[0].tag.album,
                             style: TextStyle(fontSize: 20)),
-                        Text(state.sequence[state.currentIndex].tag.title)
+                        Text(state.sequence[state.currentIndex].tag
+                            .extras['location'])
                       ])
                     : Text('');
               },
