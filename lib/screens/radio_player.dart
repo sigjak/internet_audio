@@ -7,13 +7,10 @@ import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import '../commons/player_buttons.dart';
 import 'package:path/path.dart' as p;
-//import '../models/meta.dart';
+
 import '../helpers/data_provider.dart';
-//import '../commons/slider.dart';
 
 class Player extends StatefulWidget {
-  // final int index;
-  // const Player(this.index);
   @override
   _PlayerState createState() => _PlayerState();
 }
@@ -40,8 +37,7 @@ class _PlayerState extends State<Player> {
         tag: MediaItem(
             id: index.toString(),
             album: data.stations[index].name,
-            title: data.stations[index].name,
-            // artist: data.stations[index].logo,
+            title: data.stations[index].location,
             extras: {
               'image': data.stations[index].logo,
               'location': data.stations[index].location
@@ -53,12 +49,11 @@ class _PlayerState extends State<Player> {
         tag: MediaItem(
             id: index.toString(),
             album: data.stations[index].name,
-            title: data.stations[index].name,
+            title: data.stations[index].location,
             extras: {
               'image': data.stations[index].logo,
               'location': data.stations[index].location
             }),
-        //artist: data.stations[index].logo),
       );
     }
 
