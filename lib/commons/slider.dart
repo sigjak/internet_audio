@@ -20,7 +20,7 @@ class _SliderBarState extends State<SliderBar> {
               stream: widget._audioPlayer.positionStream,
               builder: (context, snapshot2) {
                 Duration position = snapshot2.data ?? Duration.zero;
-
+                print(position);
                 if (position > duration) {
                   position = duration;
                 }

@@ -1,12 +1,15 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:internet_audio/commons/radio_slider.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import '../commons/player_buttons.dart';
+import 'package:path/path.dart' as p;
 //import '../models/meta.dart';
 import '../helpers/data_provider.dart';
+//import '../commons/slider.dart';
 
 class Player extends StatefulWidget {
   // final int index;
@@ -27,12 +30,11 @@ class _PlayerState extends State<Player> {
   }
 
   initRadio(index) async {
-    data = Provider.of<DataProvider>(context,
-        listen: false); //context.read<DataProvider>();
+    data = context.read<DataProvider>();
     final session = await AudioSession.instance;
     final AudioSource radio;
     // final _playList = ConcatenatingAudioSource(children: data.playlist);
-    if (index == 0) {
+    if (p.extension(data.stations[index].source) == '.mpd') {
       radio = DashAudioSource(
         Uri.parse(data.stations[index].source),
         tag: MediaItem(
@@ -107,8 +109,8 @@ class _PlayerState extends State<Player> {
                     : Text('');
               },
             ),
-            PlayerButtons(_audioPlayer, true),
-            // SliderBar(_audioPlayer),
+            PlayerButtons(_audioPlayer),
+            RadioSlider(_audioPlayer),
             SizedBox(
               height: 5,
             ),
