@@ -6,7 +6,6 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 import '../commons/player_buttons.dart';
-import 'package:path/path.dart' as p;
 
 import '../helpers/data_provider.dart';
 
