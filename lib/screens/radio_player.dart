@@ -31,31 +31,18 @@ class _PlayerState extends State<Player> {
     final session = await AudioSession.instance;
     final AudioSource radio;
     // final _playList = ConcatenatingAudioSource(children: data.playlist);
-    if (p.extension(data.stations[index].source) == '.mpd') {
-      radio = DashAudioSource(
-        Uri.parse(data.stations[index].source),
-        tag: MediaItem(
-            id: index.toString(),
-            album: data.stations[index].name,
-            title: data.stations[index].location,
-            extras: {
-              'image': data.stations[index].logo,
-              'location': data.stations[index].location
-            }),
-      );
-    } else {
-      radio = AudioSource.uri(
-        Uri.parse(data.stations[index].source),
-        tag: MediaItem(
-            id: index.toString(),
-            album: data.stations[index].name,
-            title: data.stations[index].location,
-            extras: {
-              'image': data.stations[index].logo,
-              'location': data.stations[index].location
-            }),
-      );
-    }
+
+    radio = AudioSource.uri(
+      Uri.parse(data.stations[index].source),
+      tag: MediaItem(
+          id: index.toString(),
+          album: data.stations[index].name,
+          title: data.stations[index].location,
+          extras: {
+            'image': data.stations[index].logo,
+            'location': data.stations[index].location
+          }),
+    );
 
     await session.configure(AudioSessionConfiguration.speech());
     await _audioPlayer.setAudioSource(radio);
