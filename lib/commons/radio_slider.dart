@@ -12,17 +12,17 @@ class RadioSlider extends StatelessWidget {
     return Row(
       children: [
         StreamBuilder<PositionData>(
-            stream:
-                Rx.combineLatest3<Duration, Duration, Duration?, PositionData>(
+            stream: Rx.combineLatest2<Duration, Duration, PositionData>(
               _audioPlayer.positionStream,
               _audioPlayer.bufferedPositionStream,
-              _audioPlayer.durationStream,
-              (position, bufferedPosition, duration) => PositionData(
-                  position, bufferedPosition, duration ?? Duration.zero),
+              (position, bufferedPosition) => PositionData(
+                position,
+                bufferedPosition,
+              ),
             ),
             builder: (context, snapshot) {
-              final positionData = snapshot.data ??
-                  PositionData(Duration.zero, Duration.zero, Duration.zero);
+              final positionData =
+                  snapshot.data ?? PositionData(Duration.zero, Duration.zero);
               // var position = positionData.position;
               //var bufferedposition = positionData.bufferedPosition;
               // var duration = positionData.duration;
@@ -31,7 +31,6 @@ class RadioSlider extends StatelessWidget {
                 audioPlayer: _audioPlayer,
                 position: positionData.position,
                 bufferedPosition: positionData.bufferedPosition,
-                duration: positionData.duration,
               );
             })
       ],
@@ -42,21 +41,20 @@ class RadioSlider extends StatelessWidget {
 class PositionData {
   final Duration position;
   final Duration bufferedPosition;
-  final Duration duration;
-  PositionData(this.position, this.bufferedPosition, this.duration);
+
+  PositionData(this.position, this.bufferedPosition);
 }
 
 class SeekBar extends StatefulWidget {
   final AudioPlayer audioPlayer;
   final Duration position;
   final Duration bufferedPosition;
-  final Duration duration;
 
-  SeekBar(
-      {required this.audioPlayer,
-      required this.position,
-      required this.bufferedPosition,
-      required this.duration});
+  SeekBar({
+    required this.audioPlayer,
+    required this.position,
+    required this.bufferedPosition,
+  });
 
   @override
   _SeekBarState createState() => _SeekBarState();
