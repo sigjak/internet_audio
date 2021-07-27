@@ -15,9 +15,11 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  final List<int> sleepingTime = [2, 10, 20, 30, 45, 60];
   late AudioPlayer _audioPlayer;
   int index = 0;
   late DataProvider data;
+  //bool isSleep = false;
   @override
   void initState() {
     super.initState();
@@ -30,7 +32,6 @@ class _PlayerState extends State<Player> {
     final session = await AudioSession.instance;
     final AudioSource radio;
     // final _playList = ConcatenatingAudioSource(children: data.playlist);
-
     radio = AudioSource.uri(
       Uri.parse(data.stations[index].source),
       tag: MediaItem(
@@ -57,12 +58,47 @@ class _PlayerState extends State<Player> {
 
   @override
   Widget build(BuildContext context) {
-    //final data = Provider.of<DataProvider>(context);
+    // final wdata = Provider.of<DataProvider>(context);
+
+    final wdata = context.watch<DataProvider>();
     return Scaffold(
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
         title: Text('Audioplayer'),
         centerTitle: true,
+        actions: [
+          Text(data.sleepTime.toString()),
+          wdata.isSleep
+              ? TextButton(
+                  onPressed: () {
+                    data.timer.cancel();
+                    setState(() {
+                      wdata.isSleep = false;
+                    });
+                    wdata.snack('Sleep cancelled !', context);
+                  },
+                  child: Text('Cancel Sleep',
+                      style: TextStyle(color: Colors.white)),
+                )
+              : PopupMenuButton<int>(
+                  offset: Offset(60, 40),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text('Sleep'),
+                  ),
+                  onSelected: (value) {
+                    data.sleeping(value);
+                    data.snack('Sleeping in $value minutes', context);
+                  },
+                  itemBuilder: (context) {
+                    return sleepingTime.map((item) {
+                      return PopupMenuItem<int>(
+                        value: item,
+                        child: Text('${item.toString()} minutes.'),
+                      );
+                    }).toList();
+                  })
+        ],
       ),
       body: Center(
         child: Column(

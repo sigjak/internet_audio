@@ -23,10 +23,7 @@ class RadioSlider extends StatelessWidget {
             builder: (context, snapshot) {
               final positionData =
                   snapshot.data ?? PositionData(Duration.zero, Duration.zero);
-              // var position = positionData.position;
-              //var bufferedposition = positionData.bufferedPosition;
-              // var duration = positionData.duration;
-              // print('Duration: $duration');
+
               return SeekBar(
                 audioPlayer: _audioPlayer,
                 position: positionData.position,

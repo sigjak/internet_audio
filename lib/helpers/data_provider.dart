@@ -1,8 +1,45 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'dart:async';
 import '../models/station.dart';
 
 class DataProvider with ChangeNotifier {
+  late Timer timer;
+  int sleepTime = 0;
+  bool isSleep = false;
+
+  sleeping(int sleep) {
+    sleepTime = sleep;
+    print(sleepTime);
+    isSleep = true;
+    //String greeting = 'Sleep in $sleep minutes !';
+    //snack(greeting, context);
+    timer = Timer.periodic(Duration(minutes: 1), (timer) {
+      sleepTime--;
+      notifyListeners();
+
+      if (sleepTime <= 0) {
+        timer.cancel();
+        isSleep = false;
+      }
+    });
+    notifyListeners();
+  }
+
+  snack(String greeting, context) {
+    SnackBar snackBar = SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        elevation: 5,
+        content: Text(
+          greeting,
+          textAlign: TextAlign.center,
+          style: TextStyle(),
+        ));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
   List<Station> stations = [
     Station(
         name: 'BBC World Service',
