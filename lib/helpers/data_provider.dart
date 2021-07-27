@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:async';
 import '../models/station.dart';
@@ -21,7 +22,8 @@ class DataProvider with ChangeNotifier {
 
       if (sleepTime <= 0) {
         timer.cancel();
-        isSleep = false;
+        dispose();
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
       }
     });
     notifyListeners();

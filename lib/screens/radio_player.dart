@@ -65,20 +65,29 @@ class _PlayerState extends State<Player> {
       backgroundColor: Colors.grey[400],
       appBar: AppBar(
         title: Text('Audioplayer'),
-        centerTitle: true,
         actions: [
-          Text(data.sleepTime.toString()),
           wdata.isSleep
-              ? TextButton(
-                  onPressed: () {
-                    data.timer.cancel();
-                    setState(() {
-                      wdata.isSleep = false;
-                    });
-                    wdata.snack('Sleep cancelled !', context);
-                  },
-                  child: Text('Cancel Sleep',
-                      style: TextStyle(color: Colors.white)),
+              ? Row(
+                  children: [
+                    Text(
+                      'Minutes until sleep: ${data.sleepTime}',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        data.timer.cancel();
+                        setState(() {
+                          wdata.isSleep = false;
+                        });
+                        wdata.snack('Sleep cancelled !', context);
+                      },
+                      child: Text('Cancel Sleep',
+                          style: TextStyle(color: Colors.black)),
+                    )
+                  ],
                 )
               : PopupMenuButton<int>(
                   offset: Offset(60, 40),
