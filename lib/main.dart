@@ -3,6 +3,7 @@ import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './helpers/data_provider.dart';
+import 'screens/internet_check.dart';
 
 Future<void> main() async {
   await JustAudioBackground.init(
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.grey[500],
         ),
-        home: Player(),
+        home: InernetCheck(),
       ),
     );
   }
