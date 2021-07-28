@@ -14,8 +14,7 @@ class DataProvider with ChangeNotifier {
     sleepTime = sleep;
     print(sleepTime);
     isSleep = true;
-    //String greeting = 'Sleep in $sleep minutes !';
-    //snack(greeting, context);
+
     timer = Timer.periodic(Duration(minutes: 1), (timer) {
       sleepTime--;
       notifyListeners();
