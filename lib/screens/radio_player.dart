@@ -166,6 +166,7 @@ class _PlayerState extends State<Player> {
                               onPressed: () async {
                                 await _audioPlayer.stop();
                                 initRadio(index);
+                                await _audioPlayer.play();
                               },
                               icon: Icon(Icons.play_arrow),
                             ),

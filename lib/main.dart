@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.grey[500],
         ),
-        home: InernetCheck(),
+        home: Player(),
       ),
     );
   }

@@ -32,6 +32,7 @@ dependencies:
     provider: ^5.0.0
     rxdart: ^0.27.1
     flutter_native_splash: ^1.2.0
+    connectivity_plus: ^1.0.6
 
 flutter_native_splash:
     background_image: 'assets/images/grey.png'
