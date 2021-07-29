@@ -88,9 +88,12 @@ class _SeekBarState extends State<SeekBar> {
               onChanged: (value) {},
             ),
             Positioned(
-                top: 35.0,
+                top: 32.0,
                 left: 10.0,
-                child: Text(widget.position.toString().split(".").first))
+                child: Text(
+                  widget.position.toString().split(".").first,
+                  style: TextStyle(fontSize: 12),
+                ))
           ],
         ),
       ),

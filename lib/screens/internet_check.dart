@@ -27,7 +27,7 @@ class _InternetCheckState extends State<InternetCheck> {
         connText = 'Connection available !';
       });
       if (connectivityResult != ConnectivityResult.none) {
-        Navigator.push(
+        Navigator.pushReplacement(
             context, MaterialPageRoute(builder: (context) => Player()));
       } else {
         setState(() {

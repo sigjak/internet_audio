@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:async';
 import '../models/station.dart';
+import 'dart:io';
 
 class DataProvider with ChangeNotifier {
   late Timer timer;
@@ -23,6 +24,7 @@ class DataProvider with ChangeNotifier {
         timer.cancel();
         dispose();
         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        exit(0);
       }
     });
     notifyListeners();
