@@ -10,26 +10,6 @@ class PlayerButtons extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // isRadio
-        //     ? SizedBox()
-        //     : StreamBuilder<Duration>(
-        //         stream: _audioPlayer.positionStream,
-        //         builder: (_, snapshot) {
-        //           final pos = snapshot.data;
-
-        //           return IconButton(
-        //               icon: Icon(Icons.forward_10),
-        //               onPressed: () async {
-        //                 Duration seeking = pos! + Duration(seconds: 10);
-        //                 await _audioPlayer.seek(seeking);
-        //               });
-        //         }),
-        // StreamBuilder<SequenceState?>(
-        //   stream: _audioPlayer.sequenceStateStream,
-        //   builder: (context, snapshot) {
-        //     return _previousButton();
-        //   },
-        // ),
         StreamBuilder<PlayerState>(
           stream: _audioPlayer.playerStateStream,
           builder: (_, snapshot) {
@@ -38,25 +18,6 @@ class PlayerButtons extends StatelessWidget {
             return _playPauseButton(playerState);
           },
         ),
-        // StreamBuilder<SequenceState?>(
-        //   stream: _audioPlayer.sequenceStateStream,
-        //   builder: (context, snapshot) {
-        //     return _nextButton();
-        //   },
-        // ),
-        // isRadio
-        //     ? SizedBox()
-        //     : StreamBuilder<Duration>(
-        //         stream: _audioPlayer.positionStream,
-        //         builder: (_, snapshot) {
-        //           final pos = snapshot.data;
-        //           return IconButton(
-        //               icon: Icon(Icons.replay_10),
-        //               onPressed: () async {
-        //                 Duration seeking = pos! - Duration(seconds: 10);
-        //                 await _audioPlayer.seek(seeking);
-        //               });
-        //         }),
       ],
     );
   }
