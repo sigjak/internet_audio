@@ -15,7 +15,7 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
-  final List<int> sleepingTime = [2, 10, 20, 30, 45, 60];
+  final List<int> sleepingTime = [5, 10, 20, 30, 45, 60];
   late AudioPlayer _audioPlayer;
   int index = 0;
   late DataProvider data;
@@ -165,10 +165,13 @@ class _PlayerState extends State<Player> {
                             trailing: IconButton(
                               onPressed: () async {
                                 await _audioPlayer.stop();
-                                initRadio(index);
-                                await _audioPlayer.play();
+                                await initRadio(index);
+                                _audioPlayer.play();
                               },
-                              icon: Icon(Icons.play_arrow),
+                              icon: Icon(
+                                Icons.play_arrow,
+                                size: 35,
+                              ),
                             ),
                           ),
                         );

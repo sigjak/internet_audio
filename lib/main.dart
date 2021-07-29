@@ -1,4 +1,4 @@
-import '/screens/radio_player.dart';
+//import '/screens/radio_player.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Colors.grey[500],
         ),
-        home: Player(),
+        home: InternetCheck(),
       ),
     );
   }
