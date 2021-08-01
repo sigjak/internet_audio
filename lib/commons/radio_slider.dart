@@ -81,15 +81,18 @@ class _SeekBarState extends State<SeekBar> {
         ),
         child: Stack(
           children: [
-            Slider(
-              min: 0.0,
-              max: maxValue(),
-              value: widget.position.inMilliseconds.toDouble(),
-              onChanged: (value) {},
+            Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: Slider(
+                min: 0.0,
+                max: maxValue(),
+                value: widget.position.inMilliseconds.toDouble(),
+                onChanged: (value) {},
+              ),
             ),
             Positioned(
                 top: 32.0,
-                left: 10.0,
+                left: 15.0,
                 child: Text(
                   widget.position.toString().split(".").first,
                   style: TextStyle(fontSize: 12),

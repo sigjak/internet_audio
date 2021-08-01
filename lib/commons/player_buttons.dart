@@ -66,19 +66,14 @@ class PlayerButtons extends StatelessWidget {
             );
           },
         ),
-        // StreamBuilder<IcyMetadata?>(
-        //     stream: _audioPlayer.icyMetadataStream,
-        //     builder: (_, snapshot) {
-        //       final icy = snapshot.data?.info?.title;
-        //       final hed = snapshot.data?.headers?.genre;
-        //       return Text(hed.toString());
-        //     }),
-        // StreamBuilder<double>(
-        //     stream: _audioPlayer.volumeStream,
-        //     builder: (_, snapshot) {
-        //       final vol = snapshot.data;
-        //       return Text(vol.toString());
-        //     }),
+        StreamBuilder<IcyMetadata?>(
+            stream: _audioPlayer.icyMetadataStream,
+            builder: (_, snapshot) {
+              final icy = snapshot.data?.info?.title;
+              final hed = snapshot.data?.headers?.genre;
+              print('Header-- $hed ----Icy-- $icy');
+              return Text('');
+            }),
         StreamBuilder<PlayerState>(
           stream: _audioPlayer.playerStateStream,
           builder: (_, snapshot) {
