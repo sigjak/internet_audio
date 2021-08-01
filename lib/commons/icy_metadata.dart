@@ -8,16 +8,26 @@ class Icy extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: StreamBuilder<IcyMetadata?>(
-          stream: _audioPlayer.icyMetadataStream,
-          builder: (_, snapshot) {
-            final icyData = snapshot.data;
-            if (icyData != null) {
-              return Text(icyData.info?.title ?? 'notitle');
-            } else {
-              return Text('Nodata');
-            }
-            //return Text(icyData?.info?.title ?? 'notitle');
-          }),
+        stream: _audioPlayer.icyMetadataStream,
+        builder: (_, snapshot) {
+          final icyData = snapshot.data;
+          final icyTitle = icyData?.info?.title;
+          if (icyTitle != null && icyTitle.isNotEmpty) {
+            return Text(icyTitle); // Colum comes here
+          } else {
+            return Text(
+                icyData?.headers?.genre ?? ''); // header genre comes here
+          }
+
+          //if (icyData != null) {
+          //   print('Title ------------ ${icyData.info?.title?.isEmpty}');
+          //   return Text(icyData.info?.title ?? 'notitle');
+          // } else {
+          //   return Text('Nodata');
+          // }
+          //return Text(icyData?.info?.title ?? 'notitle');
+        },
+      ),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:audio_session/audio_session.dart';
+import 'package:internet_audio/commons/icy_metadata.dart';
 import 'package:internet_audio/commons/radio_slider.dart';
 import 'package:just_audio_background/just_audio_background.dart';
 import 'package:just_audio/just_audio.dart';
@@ -129,12 +130,13 @@ class _PlayerState extends State<Player> {
                         ),
                         Text(state.sequence[0].tag.album,
                             style: TextStyle(fontSize: 20)),
-                        Text(state.sequence[state.currentIndex].tag
-                            .extras['location'])
+                        // Text(state.sequence[state.currentIndex].tag
+                        //     .extras['location'])
                       ])
                     : Text('');
               },
             ),
+            Icy(_audioPlayer),
             PlayerButtons(_audioPlayer),
             RadioSlider(_audioPlayer),
             SizedBox(
