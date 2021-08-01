@@ -4,6 +4,7 @@ import 'package:just_audio/just_audio.dart';
 class PlayerButtons extends StatelessWidget {
   const PlayerButtons(this._audioPlayer, {Key? key}) : super(key: key);
   final AudioPlayer _audioPlayer;
+
   void showSliderDialog({
     required BuildContext context,
     required String title,
@@ -66,14 +67,6 @@ class PlayerButtons extends StatelessWidget {
             );
           },
         ),
-        StreamBuilder<IcyMetadata?>(
-            stream: _audioPlayer.icyMetadataStream,
-            builder: (_, snapshot) {
-              final icy = snapshot.data?.info?.title;
-              final hed = snapshot.data?.headers?.genre;
-              print('Header-- $hed ----Icy-- $icy');
-              return Text('');
-            }),
         StreamBuilder<PlayerState>(
           stream: _audioPlayer.playerStateStream,
           builder: (_, snapshot) {
