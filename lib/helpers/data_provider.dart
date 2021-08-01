@@ -66,17 +66,22 @@ class DataProvider with ChangeNotifier {
         location: 'New York City'),
     Station(
         name: 'WAMU',
-        source: 'http://wamu-1.streamguys.com',
+        //source: 'http://wamu-1.streamguys.com',
+        source: 'https://hd1.wamu.org/wamu-1.aac',
         logo: 'assets/images/wamu.png',
         location: 'Washington DC'),
     Station(
         name: 'WBUR',
-        source: 'https://icecast-stream.wbur.org/wbur',
+        //source: 'https://icecast-stream.wbur.org/wbur',
+        source: 'http://wbur-sc.streamguys.com/wbur.aac',
         logo: 'assets/images/wbur.png',
         location: 'Boston'),
     Station(
         name: 'RUV Rás 1',
         source: 'http://netradio.ruv.is/ras1.mp3',
+
+        //source:
+        //  'https://ruv-ras1-live-hls.secure.footprint.net/hls-live/ruv-ras1/_definst_/live.m3u8',
         logo: 'assets/images/ras_1.png',
         location: 'Reykjavík'),
     Station(

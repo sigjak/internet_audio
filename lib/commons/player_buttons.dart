@@ -4,12 +4,81 @@ import 'package:just_audio/just_audio.dart';
 class PlayerButtons extends StatelessWidget {
   const PlayerButtons(this._audioPlayer, {Key? key}) : super(key: key);
   final AudioPlayer _audioPlayer;
+  void showSliderDialog({
+    required BuildContext context,
+    required String title,
+    required int divisions,
+    required double min,
+    required double max,
+    String valueSuffix = '',
+    // TODO: Replace these two by ValueStream.
+    required double value,
+    required Stream<double> stream,
+    required ValueChanged<double> onChanged,
+  }) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title, textAlign: TextAlign.center),
+        content: StreamBuilder<double>(
+          stream: stream,
+          builder: (context, snapshot) => Container(
+            height: 100.0,
+            child: Column(
+              children: [
+                Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
+                    style: TextStyle(
+                        fontFamily: 'Fixed',
+                        fontWeight: FontWeight.bold,
+                        fontSize: 24.0)),
+                Slider(
+                  divisions: divisions,
+                  min: min,
+                  max: max,
+                  value: snapshot.data ?? value,
+                  onChanged: onChanged,
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
+        IconButton(
+          icon: Icon(Icons.volume_up),
+          onPressed: () {
+            showSliderDialog(
+              context: context,
+              title: "Adjust volume",
+              divisions: 10,
+              min: 0.0,
+              max: 1.0,
+              value: _audioPlayer.volume,
+              stream: _audioPlayer.volumeStream,
+              onChanged: _audioPlayer.setVolume,
+            );
+          },
+        ),
+        // StreamBuilder<IcyMetadata?>(
+        //     stream: _audioPlayer.icyMetadataStream,
+        //     builder: (_, snapshot) {
+        //       final icy = snapshot.data?.info?.title;
+        //       final hed = snapshot.data?.headers?.genre;
+        //       return Text(hed.toString());
+        //     }),
+        // StreamBuilder<double>(
+        //     stream: _audioPlayer.volumeStream,
+        //     builder: (_, snapshot) {
+        //       final vol = snapshot.data;
+        //       return Text(vol.toString());
+        //     }),
         StreamBuilder<PlayerState>(
           stream: _audioPlayer.playerStateStream,
           builder: (_, snapshot) {
