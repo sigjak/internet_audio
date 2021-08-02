@@ -37,19 +37,10 @@ class Icy extends StatelessWidget {
           final icyData = snapshot.data;
           final icyTitle = icyData?.info?.title;
           if (icyTitle != null && icyTitle.isNotEmpty) {
-            return icyCol(icyTitle); // Colum comes here
+            return icyCol(icyTitle);
           } else {
-            return Text(
-                icyData?.headers?.genre ?? ''); // header genre comes here
+            return Text(icyData?.headers?.genre ?? '');
           }
-
-          //if (icyData != null) {
-          //   print('Title ------------ ${icyData.info?.title?.isEmpty}');
-          //   return Text(icyData.info?.title ?? 'notitle');
-          // } else {
-          //   return Text('Nodata');
-          // }
-          //return Text(icyData?.info?.title ?? 'notitle');
         },
       ),
     );

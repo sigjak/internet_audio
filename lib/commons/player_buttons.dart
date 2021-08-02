@@ -12,7 +12,6 @@ class PlayerButtons extends StatelessWidget {
     required double min,
     required double max,
     String valueSuffix = '',
-    // TODO: Replace these two by ValueStream.
     required double value,
     required Stream<double> stream,
     required ValueChanged<double> onChanged,

@@ -169,8 +169,6 @@ class _PlayerState extends State<Player> {
                                 await _audioPlayer.stop();
                                 await initRadio(index);
                                 _audioPlayer.play();
-                                // print(
-                                //     'ICY: ---------------${_audioPlayer.icyMetadata?.info}');
                               },
                               icon: Icon(
                                 Icons.play_arrow,
