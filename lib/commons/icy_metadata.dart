@@ -8,13 +8,14 @@ Column icyCol(String str) {
     return Column(
       children: [
         Text(
-          splitString[0],
-          textAlign: TextAlign.center,
-        ),
-        Text(
           splitString[1],
           textAlign: TextAlign.center,
-          style: TextStyle(fontSize: 12),
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        Text(
+          splitString[0],
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 10),
         )
       ],
     );

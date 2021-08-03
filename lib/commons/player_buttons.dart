@@ -23,20 +23,32 @@ class PlayerButtons extends StatelessWidget {
         content: StreamBuilder<double>(
           stream: stream,
           builder: (context, snapshot) => Container(
-            height: 100.0,
+            height: 50.0,
             child: Column(
               children: [
-                Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
-                    style: TextStyle(
-                        fontFamily: 'Fixed',
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24.0)),
-                Slider(
-                  divisions: divisions,
-                  min: min,
-                  max: max,
-                  value: snapshot.data ?? value,
-                  onChanged: onChanged,
+                // Text('${snapshot.data?.toStringAsFixed(1)}$valueSuffix',
+                //     style: TextStyle(
+                //         // fontFamily: 'Fixed',
+                //         fontWeight: FontWeight.bold,
+                //         fontSize: 24.0)),
+                SliderTheme(
+                  data: SliderThemeData(
+                    inactiveTrackColor: Colors.grey.shade500,
+                    activeTrackColor: Colors.grey[500],
+                    overlayColor: Colors.grey.shade300,
+                    thumbColor: Colors.grey[500],
+                    overlappingShapeStrokeColor: Colors.red,
+                    trackHeight: 1,
+                  ),
+                  child: Slider(
+                    divisions: divisions,
+                    label: snapshot.data?.toStringAsFixed(1) ??
+                        value.toStringAsFixed(1),
+                    min: min,
+                    max: max,
+                    value: snapshot.data ?? value,
+                    onChanged: onChanged,
+                  ),
                 ),
               ],
             ),

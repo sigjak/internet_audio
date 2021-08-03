@@ -50,7 +50,7 @@ class DataProvider with ChangeNotifier {
         //source:
         // 'https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/dash/nonuk/dash_low/aks/bbc_world_service.mpd',
         source: 'http://stream.live.vc.bbcmedia.co.uk/bbc_world_service',
-        logo: 'assets/images/bbc.png',
+        logo: 'assets/images/bbc.png', //TODO change to imageBBC
         location: 'UK'),
     Station(
         name: 'WNYC 93.9',
@@ -73,6 +73,7 @@ class DataProvider with ChangeNotifier {
     Station(
         name: 'WBUR',
         //source: 'https://icecast-stream.wbur.org/wbur',
+        //http://wbur-ogg.streamguys.com/wburlive.ogg
         source: 'http://wbur-sc.streamguys.com/wbur.aac',
         logo: 'assets/images/wbur.png',
         location: 'Boston'),

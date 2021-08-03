@@ -18,17 +18,21 @@ class Player extends StatefulWidget {
 class _PlayerState extends State<Player> {
   final List<int> sleepingTime = [5, 10, 20, 30, 45, 60];
   late AudioPlayer _audioPlayer;
+  late Image imageBBC;
   int index = 0;
   late DataProvider data;
   //bool isSleep = false;
   @override
   void initState() {
+    imageBBC = Image.asset("assets/images/bbc.png");
     super.initState();
     _audioPlayer = AudioPlayer();
     initRadio(index);
   }
 
   initRadio(index) async {
+    // _audioPlayer
+    //  .setAutomaticallyWaitsToMinimizeStalling(true); //only IOS
     data = context.read<DataProvider>();
     final session = await AudioSession.instance;
     final AudioSource radio;
@@ -48,6 +52,12 @@ class _PlayerState extends State<Player> {
     await session.configure(AudioSessionConfiguration.speech());
     await _audioPlayer.setAudioSource(radio);
     setState(() {});
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    precacheImage(imageBBC.image, context);
   }
 
   @override
@@ -123,10 +133,11 @@ class _PlayerState extends State<Player> {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 20),
                           height: 200,
-                          child: Image(
-                            image: AssetImage(
-                                state.sequence[0].tag.extras['image']),
-                          ),
+                          child: state.sequence[0].tag.extras['image'],
+                          // child: Image(
+                          //   image: AssetImage(
+                          //       state.sequence[0].tag.extras['image']),
+                          // ),
                         ),
                         Text(state.sequence[0].tag.album,
                             style: TextStyle(fontSize: 20)),
@@ -160,9 +171,11 @@ class _PlayerState extends State<Player> {
                           margin: EdgeInsets.fromLTRB(16, 2, 16, 0),
                           child: ListTile(
                             leading: CircleAvatar(
-                              backgroundImage:
-                                  AssetImage(data.stations[index].logo),
-                            ),
+                                backgroundImage: ResizeImage(
+                              AssetImage(data.stations[index].logo),
+                              width: 40,
+                              height: 40,
+                            )),
                             title: Text(data.stations[index].name),
                             trailing: IconButton(
                               onPressed: () async {

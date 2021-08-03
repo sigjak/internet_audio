@@ -22,9 +22,9 @@ class MyApp extends StatelessWidget {
       create: (BuildContext context) => DataProvider(),
       child: MaterialApp(
         theme: ThemeData(
-          brightness: Brightness.light,
-          primaryColor: Colors.grey[500],
-        ),
+            brightness: Brightness.light,
+            primaryColor: Colors.grey[500],
+            accentColor: Colors.black),
         home: InternetCheck(),
       ),
     );
