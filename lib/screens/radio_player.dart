@@ -19,24 +19,26 @@ class _PlayerState extends State<Player> {
   final List<int> sleepingTime = [5, 10, 20, 30, 45, 60];
   late AudioPlayer _audioPlayer;
   late Image imageBBC;
+  late Image imageWNYC;
+  late List<Image> imageList = [imageBBC, imageWNYC];
+
   int index = 0;
   late DataProvider data;
   //bool isSleep = false;
   @override
   void initState() {
     imageBBC = Image.asset("assets/images/bbc.png");
+    imageWNYC = Image.asset("assets/images/wnyc.png");
     super.initState();
     _audioPlayer = AudioPlayer();
     initRadio(index);
   }
 
   initRadio(index) async {
-    // _audioPlayer
-    //  .setAutomaticallyWaitsToMinimizeStalling(true); //only IOS
     data = context.read<DataProvider>();
     final session = await AudioSession.instance;
     final AudioSource radio;
-    // final _playList = ConcatenatingAudioSource(children: data.playlist);
+
     radio = AudioSource.uri(
       Uri.parse(data.stations[index].source),
       tag: MediaItem(
@@ -48,7 +50,7 @@ class _PlayerState extends State<Player> {
             'location': data.stations[index].location
           }),
     );
-
+    data.stations[index].logo = imageList[index];
     await session.configure(AudioSessionConfiguration.speech());
     await _audioPlayer.setAudioSource(radio);
     setState(() {});
@@ -58,6 +60,7 @@ class _PlayerState extends State<Player> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     precacheImage(imageBBC.image, context);
+    precacheImage(imageWNYC.image, context);
   }
 
   @override
@@ -133,7 +136,7 @@ class _PlayerState extends State<Player> {
                         Container(
                           margin: EdgeInsets.symmetric(vertical: 20),
                           height: 200,
-                          child: state.sequence[0].tag.extras['image'],
+                          child: data.stations[index].logo,
                           // child: Image(
                           //   image: AssetImage(
                           //       state.sequence[0].tag.extras['image']),
@@ -171,11 +174,13 @@ class _PlayerState extends State<Player> {
                           margin: EdgeInsets.fromLTRB(16, 2, 16, 0),
                           child: ListTile(
                             leading: CircleAvatar(
-                                backgroundImage: ResizeImage(
-                              AssetImage(data.stations[index].logo),
-                              width: 40,
-                              height: 40,
-                            )),
+                                backgroundImage:
+                                    data.stations[index].logo?.image
+                                //   backgroundImage: ResizeImage(
+                                // AssetImage(data.stations[index].logo),
+                                // width: 40,
+                                // height: 40,
+                                ),
                             title: Text(data.stations[index].name),
                             trailing: IconButton(
                               onPressed: () async {

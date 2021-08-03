@@ -8,6 +8,7 @@ import 'dart:io';
 
 class DataProvider with ChangeNotifier {
   late Timer timer;
+
   int sleepTime = 0;
   bool isSleep = false;
 
@@ -43,6 +44,7 @@ class DataProvider with ChangeNotifier {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
+  late Image imageBBC;
   List<Station> stations = [
     Station(
         name: 'BBC World Service',
@@ -50,51 +52,49 @@ class DataProvider with ChangeNotifier {
         //source:
         // 'https://a.files.bbci.co.uk/media/live/manifesto/audio/simulcast/dash/nonuk/dash_low/aks/bbc_world_service.mpd',
         source: 'http://stream.live.vc.bbcmedia.co.uk/bbc_world_service',
-        logo: 'assets/images/bbc.png', //TODO change to imageBBC
         location: 'UK'),
     Station(
         name: 'WNYC 93.9',
         //source: 'http://fm939.wnyc.org/wnycfm',
 
         source: 'https://fm939.wnyc.org/wnycfm-web',
-        logo: 'assets/images/wnyc.png',
         location: 'New York City'),
-    Station(
-        name: 'WNYC 820 AM',
-        source: 'https://am820.wnyc.org/wnycam-tunein.aac',
-        logo: 'assets/images/wnyc.png',
-        location: 'New York City'),
-    Station(
-        name: 'WAMU',
-        //source: 'http://wamu-1.streamguys.com',
-        source: 'https://hd1.wamu.org/wamu-1.aac',
-        logo: 'assets/images/wamu.png',
-        location: 'Washington DC'),
-    Station(
-        name: 'WBUR',
-        //source: 'https://icecast-stream.wbur.org/wbur',
-        //http://wbur-ogg.streamguys.com/wburlive.ogg
-        source: 'http://wbur-sc.streamguys.com/wbur.aac',
-        logo: 'assets/images/wbur.png',
-        location: 'Boston'),
-    Station(
-        name: 'RUV Rás 1',
-        source: 'http://netradio.ruv.is/ras1.mp3',
+    // Station(
+    //     name: 'WNYC 820 AM',
+    //     source: 'https://am820.wnyc.org/wnycam-tunein.aac',
+    //     logo: 'assets/images/wnyc.png',
+    //     location: 'New York City'),
+    // Station(
+    //     name: 'WAMU',
+    //     //source: 'http://wamu-1.streamguys.com',
+    //     source: 'https://hd1.wamu.org/wamu-1.aac',
+    //     logo: 'assets/images/wamu.png',
+    //     location: 'Washington DC'),
+    // Station(
+    //     name: 'WBUR',
+    //     //source: 'https://icecast-stream.wbur.org/wbur',
+    //     //http://wbur-ogg.streamguys.com/wburlive.ogg
+    //     source: 'http://wbur-sc.streamguys.com/wbur.aac',
+    //     logo: 'assets/images/wbur.png',
+    //     location: 'Boston'),
+    // Station(
+    //     name: 'RUV Rás 1',
+    //     source: 'http://netradio.ruv.is/ras1.mp3',
 
-        //source:
-        //  'https://ruv-ras1-live-hls.secure.footprint.net/hls-live/ruv-ras1/_definst_/live.m3u8',
-        logo: 'assets/images/ras_1.png',
-        location: 'Reykjavík'),
-    Station(
-        name: 'RUV Rás 2',
-        source: 'http://netradio.ruv.is/ras2.mp3',
-        logo: 'assets/images/ras_2.png',
-        location: 'Reykjavík'),
-    Station(
-        name: 'Bylgjan',
-        //source: 'http://stream3.radio.is:443/tbylgjan',
-        source: 'http://icecast.365net.is:8000/orbbylgjan.aac',
-        logo: 'assets/images/bylgjan.png',
-        location: 'Reykjavík'),
+    //     //source:
+    //     //  'https://ruv-ras1-live-hls.secure.footprint.net/hls-live/ruv-ras1/_definst_/live.m3u8',
+    //     logo: 'assets/images/ras_1.png',
+    //     location: 'Reykjavík'),
+    // Station(
+    //     name: 'RUV Rás 2',
+    //     source: 'http://netradio.ruv.is/ras2.mp3',
+    //     logo: 'assets/images/ras_2.png',
+    //     location: 'Reykjavík'),
+    // Station(
+    //     name: 'Bylgjan',
+    //     //source: 'http://stream3.radio.is:443/tbylgjan',
+    //     source: 'http://icecast.365net.is:8000/orbbylgjan.aac',
+    //     logo: 'assets/images/bylgjan.png',
+    //     location: 'Reykjavík'),
   ];
 }

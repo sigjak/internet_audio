@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+
 class Station {
   late String name;
   late String source;
-  late String logo;
+  Image? logo;
   late String location;
 
   Station(
       {required this.name,
       required this.source,
-      required this.logo,
+      this.logo,
       required this.location});
 
   Map<String, dynamic> toMap() {
