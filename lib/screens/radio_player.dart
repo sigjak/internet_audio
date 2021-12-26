@@ -66,7 +66,7 @@ class _PlayerState extends State<Player> {
 
     final wdata = context.watch<DataProvider>();
     return Scaffold(
-      backgroundColor: Colors.grey[400],
+      //backgroundColor: Colors.grey[400],
       appBar: AppBar(
         title: Text('Audioplayer'),
         actions: [

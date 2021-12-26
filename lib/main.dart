@@ -21,10 +21,8 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (BuildContext context) => DataProvider(),
       child: MaterialApp(
-        theme: ThemeData(
-            brightness: Brightness.light,
-            primaryColor: Colors.grey[500],
-            accentColor: Colors.black),
+        theme:
+            ThemeData(brightness: Brightness.dark, primarySwatch: Colors.grey),
         home: InternetCheck(),
       ),
     );

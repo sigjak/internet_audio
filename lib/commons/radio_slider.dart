@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:just_audio/just_audio.dart';
@@ -87,7 +86,12 @@ class _SeekBarState extends State<SeekBar> {
                 min: 0.0,
                 max: maxValue(),
                 value: widget.position.inMilliseconds.toDouble(),
-                onChanged: (value) {},
+                onChanged: (value) {
+                  // setState(() {
+                  //   widget.audioPlayer
+                  //       .seek(Duration(milliseconds: value.toInt()));
+                  // }); // seems not to work
+                },
               ),
             ),
             Positioned(

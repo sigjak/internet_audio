@@ -78,6 +78,11 @@ class DataProvider with ChangeNotifier {
         logo: 'assets/images/wbur.png',
         location: 'Boston'),
     Station(
+        name: 'KQED',
+        source: 'https://streams.kqed.org/kqedradio-pfs',
+        logo: 'assets/images/kqed.png',
+        location: 'San Francisco'),
+    Station(
         name: 'RUV Rás 1',
         source: 'http://netradio.ruv.is/ras1.mp3',
 
