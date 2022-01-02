@@ -89,7 +89,7 @@ class _PlayerState extends State<Player> {
                         wdata.snack('Sleep cancelled !', context);
                       },
                       child: Text('Cancel Sleep',
-                          style: TextStyle(color: Colors.black)),
+                          style: TextStyle(color: Colors.grey)),
                     )
                   ],
                 )
