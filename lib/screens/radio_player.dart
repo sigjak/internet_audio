@@ -17,7 +17,15 @@ class Player extends StatefulWidget {
 
 class _PlayerState extends State<Player> {
   final List<int> sleepingTime = [5, 10, 20, 30, 45, 60];
-  late AudioPlayer _audioPlayer;
+  final _loudnessEnhancer = AndroidLoudnessEnhancer();
+  late final AudioPlayer _player = AudioPlayer(
+    audioPipeline: AudioPipeline(
+      androidAudioEffects: [
+        _loudnessEnhancer,
+        // _equalizer,
+      ],
+    ),
+  );
 
   int index = 0;
   late DataProvider data;
@@ -25,37 +33,26 @@ class _PlayerState extends State<Player> {
   @override
   void initState() {
     super.initState();
-    _audioPlayer = AudioPlayer();
+    // _player = AudioPlayer();
     initRadio(index);
   }
 
   initRadio(index) async {
-    // _audioPlayer
-    //  .setAutomaticallyWaitsToMinimizeStalling(true); //only IOS
     data = context.read<DataProvider>();
     final session = await AudioSession.instance;
-    final AudioSource radio;
-    // final _playList = ConcatenatingAudioSource(children: data.playlist);
-    radio = AudioSource.uri(
-      Uri.parse(data.stations[index].source),
-      tag: MediaItem(
-          id: index.toString(),
-          album: data.stations[index].name,
-          title: data.stations[index].location,
-          extras: {
-            'image': data.stations[index].logo,
-            'location': data.stations[index].location
-          }),
-    );
-
     await session.configure(AudioSessionConfiguration.speech());
-    await _audioPlayer.setAudioSource(radio);
-    setState(() {});
+    _loudnessEnhancer.setEnabled(true);
+    try {
+      await _player.setAudioSource(AudioSource.uri(
+          Uri.parse("http://stream.live.vc.bbcmedia.co.uk/bbc_world_service")));
+    } catch (e) {
+      print("Error loading audio source: $e");
+    }
   }
 
   @override
   void dispose() {
-    _audioPlayer.dispose();
+    _player.dispose();
     super.dispose();
     print('dispose');
   }
@@ -116,38 +113,51 @@ class _PlayerState extends State<Player> {
       body: Center(
         child: Column(
           children: [
-            StreamBuilder<SequenceState?>(
-              stream: _audioPlayer.sequenceStateStream,
-              builder: (_, snapshot) {
-                final state = snapshot.data;
+            // StreamBuilder<SequenceState?>(
+            //   stream: _player.sequenceStateStream,
+            //   builder: (_, snapshot) {
+            //     final state = snapshot.data;
 
-                return state != null
-                    ? Column(children: [
-                        Container(
-                          margin: EdgeInsets.symmetric(vertical: 20),
-                          height: 200,
-                          //child: state.sequence[0].tag.extras['image'],
-                          child: Image(
-                            image: AssetImage(
-                                state.sequence[0].tag.extras['image']),
-                          ),
-                        ),
-                        Text(state.sequence[0].tag.album,
-                            style: TextStyle(fontSize: 20)),
-                        // Text(state.sequence[state.currentIndex].tag
-                        //     .extras['location'])
-                      ])
-                    : Text('');
+            //     return state != null
+            //         ? Column(children: [
+            //             Container(
+            //               margin: EdgeInsets.symmetric(vertical: 20),
+            //               height: 200,
+            //               //child: state.sequence[0].tag.extras['image'],
+            //               child: Image(
+            //                 image: AssetImage(
+            //                     state.sequence[0].tag.extras['image']),
+            //               ),
+            //             ),
+            //             Text(state.sequence[0].tag.album,
+            //                 style: TextStyle(fontSize: 20)),
+            //             // Text(state.sequence[state.currentIndex].tag
+            //             //     .extras['location'])
+            //           ])
+            //         : Text('');
+            //   },
+            // ),
+            Icy(_player),
+            PlayerButtons(_player),
+            RadioSlider(_player),
+            StreamBuilder<bool>(
+              stream: _loudnessEnhancer.enabledStream,
+              builder: (context, snapshot) {
+                final enabled = snapshot.data ?? false;
+                return SwitchListTile(
+                  title: Text('Loudness Enhancer'),
+                  value: enabled,
+                  onChanged: _loudnessEnhancer.setEnabled,
+                );
               },
             ),
-            Icy(_audioPlayer),
-            PlayerButtons(_audioPlayer),
-            RadioSlider(_audioPlayer),
+            LoudnessEnhancerControls(loudnessEnhancer: _loudnessEnhancer),
             SizedBox(
               height: 5,
             ),
             Expanded(
               child: Column(
+                
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(bottom: 10),
@@ -172,9 +182,9 @@ class _PlayerState extends State<Player> {
                             title: Text(data.stations[index].name),
                             trailing: IconButton(
                               onPressed: () async {
-                                await _audioPlayer.stop();
+                                await _player.stop();
                                 await initRadio(index);
-                                _audioPlayer.play();
+                                _player.play();
                               },
                               icon: Icon(
                                 Icons.play_arrow,
@@ -202,6 +212,32 @@ class _PlayerState extends State<Player> {
         child: Icon(Icons.exit_to_app),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class LoudnessEnhancerControls extends StatelessWidget {
+  final AndroidLoudnessEnhancer loudnessEnhancer;
+
+  const LoudnessEnhancerControls({
+    Key? key,
+    required this.loudnessEnhancer,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<double>(
+      stream: loudnessEnhancer.targetGainStream,
+      builder: (context, snapshot) {
+        final targetGain = snapshot.data ?? 0.0;
+        return Slider(
+          min: -1.0,
+          max: 1.0,
+          value: targetGain,
+          onChanged: loudnessEnhancer.setTargetGain,
+          label: 'foo',
+        );
+      },
     );
   }
 }
